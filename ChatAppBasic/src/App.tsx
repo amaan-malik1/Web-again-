@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div>
-      <input type="text" ref={inputRef} name="" id="" placeholder='messgae....' />
+      <input type="text" ref={inputRef} name="" id="" placeholder='write Ping....' />
       <button type='submit' onClick={handleMessage}>Send</button>
     </div>
   )
