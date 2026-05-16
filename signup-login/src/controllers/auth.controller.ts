@@ -1,5 +1,7 @@
-import type { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import type { Request, Response } from "express";
+
 import { userModel } from "../model/User.js";
 
 export const signup = async (req: Request, res: Response) => {
@@ -26,10 +28,12 @@ export const signup = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Invalid email format" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 20);
+
     await userModel.create({
-      name: name,
-      email: email,
-      password: password,
+      name,
+      email,
+      password: hashedPassword,
     });
 
     res.status(201).json({
@@ -55,6 +59,8 @@ export const login = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+    const isValidPass = ;
 
     const SECRET_USER_JWT = process.env.JWT_SECRET;
     if (!SECRET_USER_JWT) {
